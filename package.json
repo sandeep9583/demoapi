@@ -1,0 +1,24 @@
+{
+  "name": "demoapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandeep9583/demoapi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sandeep9583/demoapi/issues"
+  },
+  "homepage": "https://github.com/sandeep9583/demoapi#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

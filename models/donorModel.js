@@ -15,7 +15,11 @@ const donorSchema = new mongoose.Schema({
     email: { type: String, required: true },
     phone: { type: String, required: true },
   },
-  bloodType: { type: String, required: true },
+  bloodType: {
+    type: String,
+    required: true,
+    enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+  },
   lastDonationDate: { type: Date, required: true },
 });
 

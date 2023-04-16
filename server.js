@@ -105,6 +105,40 @@ app.get("/donors", async (req, res) => {
   }
 });
 
+app.get("/donors/count", async (req, res) => {
+  try {
+    const { city, state, country } = req.query;
+
+    const query = {};
+    if (city) {
+      query["location.city"] = city;
+    }
+    if (state) {
+      query["location.state"] = state;
+    }
+    if (country) {
+      query["location.country"] = country;
+    }
+
+    const totalCount = await Donor.countDocuments(query);
+    const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+    const countByBloodType = await Donor.aggregate([
+      { $match: query },
+      { $group: { _id: "$bloodType", count: { $sum: 1 } } },
+    ]);
+    const countMap = Object.fromEntries(countByBloodType.map(({ _id, count }) => [_id, count]));
+    const countResponse = { totalCount, ...countMap };
+    bloodTypes.forEach((type) => {
+      if (!countResponse[type]) countResponse[type] = 0;
+    });
+
+    res.status(200).json(countResponse);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 // GET one donor
 app.get("/donors/:id", async (req, res) => {
   try {
